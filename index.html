@@ -16,10 +16,9 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            /* Efek Grid Background ala Cyberpunk */
             background-image: 
                 linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90px, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
         }
 
@@ -37,11 +36,15 @@
             letter-spacing: 5px;
             margin-bottom: 30px;
             text-shadow: 0 0 10px #00f2ff;
+            line-height: 1.8;
+            /* MAGIC TRICK: Ini yang membuat tombol ENTER di keyboard terbaca jadi baris baru */
+            white-space: pre-line; 
         }
 
         #countdown {
             display: flex;
             gap: 15px;
+            justify-content: center;
         }
 
         .time-box {
@@ -59,14 +62,13 @@
 
         .label {
             font-size: 0.7rem;
-            color: #ff00c8; /* Warna pink neon untuk kontras */
+            color: #ff00c8;
             text-transform: uppercase;
             margin-top: 5px;
             letter-spacing: 2px;
             text-shadow: 0 0 5px #ff00c8;
         }
 
-        /* Animasi kedip (Glitch effect sederhana) */
         .glitch {
             animation: blink 2s infinite;
         }
@@ -81,7 +83,9 @@
 <body>
 
 <div class="container glitch">
-    <h1>COUNTDOWN HAPPY BIRTHDAY<br>RR ZAHRA NUR MAZIDAH 19 TH</h1>
+    <h1>COUNTDOWN HAPPY BIRTHDAY
+    RR ZAHRA NUR MAZIDAH 19 TH</h1>
+    
     <div id="countdown">
         <div class="time-box">
             <span class="number" id="days">00</span>
@@ -103,7 +107,6 @@
 </div>
 
 <script>
-    // Target: Tanggal 24 Maret 2026 jam 23:59:59
     const targetDate = new Date(2026, 2, 24, 23, 59, 59).getTime();
 
     function update() {
@@ -111,7 +114,12 @@
         const diff = targetDate - now;
 
         if (diff <= 0) {
-            document.body.innerHTML = "<h1 style='font-size:5rem; color:#ff00c8;'>ACCESS GRANTED / TIME UP</h1>";
+            // Menggunakan template literal (simbol ` backtick) agar Enter terbaca
+            document.body.innerHTML = `
+                <h1 style="font-size:3rem; color:#ff00c8; text-align:center; white-space:pre-line;">
+                ACCESS GRANTED
+                HAPPY BIRTHDAY ZAHRA! 🎉
+                </h1>`;
             return;
         }
 
