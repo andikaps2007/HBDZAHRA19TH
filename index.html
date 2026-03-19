@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Countdown 24</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #050505;
+            color: #00f2ff;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            /* Efek Grid Background ala Cyberpunk */
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90px, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .container {
+            text-align: center;
+            border: 2px solid #00f2ff;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5), inset 0 0 10px rgba(0, 242, 255, 0.2);
+            clip-path: polygon(0 15%, 5% 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00f2ff;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 15px;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 90px;
+        }
+
+        .number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px #00f2ff, 0 0 30px #00f2ff;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            color: #ff00c8; /* Warna pink neon untuk kontras */
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px #ff00c8;
+        }
+
+        /* Animasi kedip (Glitch effect sederhana) */
+        .glitch {
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+            52% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container glitch">
+    <h1>SYSTEM STATUS: COUNTDOWN TO 24.23.59</h1>
+    <div id="countdown">
+        <div class="time-box">
+            <span class="number" id="days">00</span>
+            <span class="label">Days</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="hours">00</span>
+            <span class="label">Hours</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="minutes">00</span>
+            <span class="label">Mins</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="seconds">00</span>
+            <span class="label">Secs</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Target: Tanggal 24 Maret 2026 jam 23:59:59
+    const targetDate = new Date(2026, 2, 24, 23, 59, 59).getTime();
+
+    function update() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            document.body.innerHTML = "<h1 style='font-size:5rem; color:#ff00c8;'>ACCESS GRANTED / TIME UP</h1>";
+            return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = d.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+    }
+
+    setInterval(update, 1000);
+    update();
+</script>
+
+</body>
+</html>
