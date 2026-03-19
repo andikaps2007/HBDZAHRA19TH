@@ -2,141 +2,180 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday RR Zahra Nur Mazidah 19 th </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HBD RR Zahra Nur Mazidah</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
     <style>
+        :root {
+            --cyber-cyan: #00f2ff;
+            --cyber-pink: #ff00c8;
+        }
+
         body {
             background-color: #050505;
-            color: #00f2ff;
+            color: var(--cyber-cyan);
             font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             overflow: hidden;
-            background-image: 
-                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
         }
 
+        /* Lock Desktop Mode */
+        @media min-width: 768px) {
+            body::before {
+                content: "MAAF, AKSES HANYA TERSEDIA PADA PERANGKAT MOBILE (HANDPHONE)";
+                position: fixed;
+                inset: 0;
+                background: black;
+                z-index: 9999;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+                color: var(--cyber-pink);
+            }
+        }
+
+        /* Countdown Style */
         .container {
             text-align: center;
-            border: 2px solid #00f2ff;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5), inset 0 0 10px rgba(0, 242, 255, 0.2);
+            border: 2px solid var(--cyber-cyan);
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 20px var(--cyber-cyan);
             clip-path: polygon(0 15%, 5% 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+            width: 85%;
         }
 
-        h1 {
-            font-size: 1.2rem;
-            letter-spacing: 5px;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px #00f2ff;
-            line-height: 1.8;
-            /* MAGIC TRICK: Ini yang membuat tombol ENTER di keyboard terbaca jadi baris baru */
-            white-space: pre-line; 
-        }
+        h1 { font-size: 1rem; line-height: 1.8; white-space: pre-line; margin-bottom: 20px; }
 
-        #countdown {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
+        #countdown { display: flex; gap: 10px; justify-content: center; }
+        .time-box { display: flex; flex-direction: column; align-items: center; min-width: 65px; }
+        .number { font-size: 2.5rem; font-weight: 700; text-shadow: 0 0 15px var(--cyber-cyan); }
+        .label { font-size: 0.6rem; color: var(--cyber-pink); text-transform: uppercase; }
 
-        .time-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 90px;
-        }
-
-        .number {
-            font-size: 3.5rem;
-            font-weight: 700;
-            text-shadow: 0 0 15px #00f2ff, 0 0 30px #00f2ff;
-        }
-
-        .label {
-            font-size: 0.7rem;
-            color: #ff00c8;
+        /* Tombol Lanjut */
+        #btn-lanjut {
+            display: none;
+            margin-top: 30px;
+            background: transparent;
+            border: 2px solid var(--cyber-pink);
+            color: var(--cyber-pink);
+            padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--cyber-pink);
             text-transform: uppercase;
-            margin-top: 5px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 5px #ff00c8;
+            font-weight: bold;
         }
 
-        .glitch {
-            animation: blink 2s infinite;
+        /* Book / Swiper Container */
+        #book-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0; left: 0;
+            background: #000;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-            52% { opacity: 1; }
+        .swiper { width: 100%; height: 100%; }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Agar gambar tidak terpotong */
         }
     </style>
 </head>
 <body>
 
-<div class="container glitch">
-    <h1>COUNTDOWN HAPPY BIRTHDAY
-    RR ZAHRA NUR MAZIDAH 19 TH</h1>
-    
-    <div id="countdown">
-        <div class="time-box">
-            <span class="number" id="days">00</span>
-            <span class="label">Days</span>
+    <div id="countdown-screen" class="container">
+        <h1>COUNTDOWN HAPPY BIRTHDAY
+        RR ZAHRA NUR MAZIDAH 19 TH</h1>
+        
+        <div id="countdown">
+            <div class="time-box"><span class="number" id="days">00</span><span class="label">Days</span></div>
+            <div class="time-box"><span class="number" id="hours">00</span><span class="label">Hours</span></div>
+            <div class="time-box"><span class="number" id="minutes">00</span><span class="label">Mins</span></div>
+            <div class="time-box"><span class="number" id="seconds">00</span><span class="label">Secs</span></div>
         </div>
-        <div class="time-box">
-            <span class="number" id="hours">00</span>
-            <span class="label">Hours</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="minutes">00</span>
-            <span class="label">Mins</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="seconds">00</span>
-            <span class="label">Secs</span>
+
+        <button id="btn-lanjut" onclick="bukaBuku()">LANJUT SISTEM</button>
+    </div>
+
+    <div id="book-container">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="1.png" alt="Halaman 1"></div>
+                <div class="swiper-slide"><img src="2.png" alt="Halaman 2"></div>
+                <div class="swiper-slide"><img src="3.png" alt="Halaman 3"></div>
+                <div class="swiper-slide"><img src="4.png" alt="Halaman 4"></div>
+                <div class="swiper-slide"><img src="5.png" alt="Halaman 5"></div>
+                <div class="swiper-slide"><img src="6.png" alt="Halaman 6"></div>
+            </div>
+            <div style="position:fixed; bottom:20px; width:100%; text-align:center; color:white; font-size:0.6rem; z-index:10; opacity:0.5;">
+                Geser ke kanan untuk membalik halaman >
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const targetDate = new Date(2026, 2, 24, 23, 59, 59).getTime();
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Target: 24 Maret 2026 jam 23:59:59
+        const targetDate = new Date(2026, 2, 19, 22, 30, 00).getTime();
 
-    function update() {
-        const now = new Date().getTime();
-        const diff = targetDate - now;
+        function update() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
 
-        if (diff <= 0) {
-            // Menggunakan template literal (simbol ` backtick) agar Enter terbaca
-            document.body.innerHTML = `
-                <h1 style="font-size:3rem; color:#ff00c8; text-align:center; white-space:pre-line;">
-                ACCESS GRANTED
-                HAPPY BIRTHDAY ZAHRA! 🎉
-                </h1>`;
-            return;
+            if (diff <= 0) {
+                document.getElementById("countdown").style.display = "none";
+                document.querySelector("h1").innerText = "SISTEM SIAP\nAKSES DIBERIKAN";
+                document.getElementById("btn-lanjut").style.display = "inline-block";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
         }
 
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        setInterval(update, 1000);
+        update();
 
-        document.getElementById("days").innerText = d.toString().padStart(2, '0');
-        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-    }
-
-    setInterval(update, 1000);
-    update();
-</script>
-
+        function bukaBuku() {
+            document.getElementById("countdown-screen").style.display = "none";
+            document.getElementById("book-container").style.display = "block";
+            
+            // Inisialisasi Swiper dengan efek Flip / Slide
+            const swiper = new Swiper('.swiper', {
+                effect: 'creative',
+                creativeEffect: {
+                    prev: { shadow: true, translate: [0, 0, -400] },
+                    next: { translate: ['100%', 0, 0] },
+                },
+                speed: 800,
+                grabCursor: true,
+            });
+        }
+    </script>
 </body>
 </html>
