@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HBD RR Zahra Nur Mazidah</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -24,10 +24,12 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            /* Memastikan sentuhan tidak mengganggu scroll default saat tidak zoom */
+            touch-action: pan-x pan-y;
         }
 
-        /* Lock Desktop Mode */
-        @media min-width: 768px) {
+        /* Lock Desktop Mode - Opsional: Hapus jika ingin bisa dibuka di PC */
+        @media (min-width: 768px) {
             body::before {
                 content: "MAAF, AKSES HANYA TERSEDIA PADA PERANGKAT MOBILE (HANDPHONE)";
                 position: fixed;
@@ -43,7 +45,6 @@
             }
         }
 
-        /* Countdown Style */
         .container {
             text-align: center;
             border: 2px solid var(--cyber-cyan);
@@ -61,7 +62,6 @@
         .number { font-size: 2.5rem; font-weight: 700; text-shadow: 0 0 15px var(--cyber-cyan); }
         .label { font-size: 0.6rem; color: var(--cyber-pink); text-transform: uppercase; }
 
-        /* Tombol Lanjut */
         #btn-lanjut {
             display: none;
             margin-top: 30px;
@@ -76,7 +76,6 @@
             font-weight: bold;
         }
 
-        /* Book / Swiper Container */
         #book-container {
             display: none;
             width: 100%;
@@ -92,10 +91,32 @@
             justify-content: center;
             align-items: center;
         }
-        .swiper-slide img {
+        
+        /* Container khusus Zoom Swiper */
+        .swiper-zoom-container {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Agar gambar tidak terpotong */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .hint-text {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 0.7rem;
+            z-index: 10;
+            opacity: 0.6;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -118,15 +139,15 @@
     <div id="book-container">
         <div class="swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="1.png" alt="Halaman 1"></div>
-                <div class="swiper-slide"><img src="2.png" alt="Halaman 2"></div>
-                <div class="swiper-slide"><img src="3.png" alt="Halaman 3"></div>
-                <div class="swiper-slide"><img src="4.png" alt="Halaman 4"></div>
-                <div class="swiper-slide"><img src="5.png" alt="Halaman 5"></div>
-                <div class="swiper-slide"><img src="6.png" alt="Halaman 6"></div>
+                <div class="swiper-slide"><div class="swiper-zoom-container"><img src="1.png"></div></div>
+                <div class="swiper-slide"><div class="swiper-zoom-container"><img src="2.png"></div></div>
+                <div class="swiper-slide"><div class="swiper-zoom-container"><img src="3.png"></div></div>
+                <div class="swiper-slide"><div class="swiper-zoom-container"><img src="4.png"></div></div>
+                <div class="swiper-slide"><div class="swiper-zoom-container"><img src="5.png"></div></div>
+                <div class="swiper-slide"><div class="swiper-zoom-container"><img src="6.png"></div></div>
             </div>
-            <div style="position:fixed; bottom:20px; width:100%; text-align:center; color:black; font-size:0.6rem; z-index:10; opacity:0.5;">
-                Geser ke kanan untuk membalik halaman >
+            <div class="hint-text">
+                Geser untuk halaman baru • Cubit untuk Zoom
             </div>
         </div>
     </div>
@@ -165,8 +186,12 @@
             document.getElementById("countdown-screen").style.display = "none";
             document.getElementById("book-container").style.display = "block";
             
-            // Inisialisasi Swiper dengan efek Flip / Slide
             const swiper = new Swiper('.swiper', {
+                // Aktifkan Fitur Zoom
+                zoom: {
+                    maxRatio: 3,
+                    minRatio: 1,
+                },
                 effect: 'creative',
                 creativeEffect: {
                     prev: { shadow: true, translate: [0, 0, -400] },
